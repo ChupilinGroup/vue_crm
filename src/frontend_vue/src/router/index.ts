@@ -1,30 +1,42 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue';
+import VueRouter, { RouteConfig } from 'vue-router';
+
+import HomePage from '../views/HomePage.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
+  // api роут для разработки, набор SVG иконок
   {
-    path: "/",
-    name: "Home",
-    component: Home
+    path: '/api/svg',
+    name: 'all-icons-page',
+    component: () => import('../components/icons/AllIconsPage.vue'),
+    meta: { layout: 'EmptyLayout' },
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+    path: '/',
+    name: 'Home',
+    component: HomePage,
+    meta: { layout: 'DefaultLayout' },
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    component: () => import('../views/LoginPage.vue'),
+    meta: { layout: 'DefaultLayout' },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/HomePage.vue'),
+    meta: { layout: 'DefaultLayout' },
+  },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;
