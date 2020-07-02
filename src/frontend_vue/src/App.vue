@@ -1,8 +1,8 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import DefaultLayout from './layouts/DefaultLayout.vue';
-import EmptyLayout from './layouts/EmptyLayout.vue';
+import DefaultLayout from './views/layouts/DefaultLayout.vue';
+import EmptyLayout from './views/layouts/EmptyLayout.vue';
 
 export default Vue.extend({
   name: 'app',

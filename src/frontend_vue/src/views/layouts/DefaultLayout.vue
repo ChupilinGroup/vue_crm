@@ -1,7 +1,7 @@
 <script lang="ts">
 import Vue from 'vue';
-import HeaderComponent from '../components/parts/HeaderComponent/HeaderComponent.vue';
-import FooterComponent from '../components/parts/FooterComponent.vue';
+import HeaderComponent from '../parts/HeaderComponent/HeaderComponent.vue';
+import FooterComponent from '../parts/FooterComponent.vue';
 
 export default Vue.extend({
   name: 'DefaultLayout',

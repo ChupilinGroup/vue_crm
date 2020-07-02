@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 
-import HomePage from '../views/HomePage.vue';
+import HomePage from '../views/pages/HomePage.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  // api роут для разработки, набор SVG иконок
   {
+    // api для разработки, набор SVG иконок
     path: '/api/svg',
     name: 'all-icons-page',
     component: () => import('../components/icons/AllIconsPage.vue'),
@@ -22,13 +22,13 @@ const routes: Array<RouteConfig> = [
   {
     path: '/categories',
     name: 'Categories',
-    component: () => import('../views/LoginPage.vue'),
+    component: () => import('../views/pages/CategoriesPage.vue'),
     meta: { layout: 'DefaultLayout' },
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/HomePage.vue'),
+    component: () => import('../views/pages/LoginPage.vue'),
     meta: { layout: 'DefaultLayout' },
   },
 ];

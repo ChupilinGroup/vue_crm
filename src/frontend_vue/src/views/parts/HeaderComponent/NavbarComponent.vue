@@ -10,15 +10,6 @@ export default Vue.extend({
 <template>
   <nav class="navigation">
     <div class="container">
-      <div class="logo">
-        <router-link to="/">
-          <h1 class="title">
-            <span class="title__top">Лямус</span>
-            <span class="title__bottom">ресторан</span>
-          </h1>
-        </router-link>
-      </div>
-
       <ul class="links">
         <li>
           <router-link to="/" exact="" active-class="active" :prefetch="false"
@@ -73,48 +64,5 @@ a {
   padding: 0;
   margin: 0;
   display: flex;
-}
-.title {
-  color: $color__white;
-  display: grid;
-
-  color: $color__white;
-  transition: 0.25s;
-  &:hover {
-    color: $color__peru;
-  }
-
-  .title__top {
-    line-height: 1;
-    font-size: 22px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-  .title__bottom {
-    line-height: 1;
-    font-size: 8px;
-    letter-spacing: 8px;
-    text-indent: 5px;
-  }
-}
-.svg {
-  height: 16px;
-  width: 16px;
-}
-.personal {
-  display: flex;
-}
-.cart__link {
-  display: grid;
-  .svg__supermarket {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  &:hover {
-    color: $color__white;
-    .svg {
-      fill: $color__peru;
-    }
-  }
 }
 </style>
