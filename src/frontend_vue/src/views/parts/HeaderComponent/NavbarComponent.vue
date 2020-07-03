@@ -1,9 +1,18 @@
 <script lang="ts">
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
 
 export default Vue.extend({
   name: 'NavbarComponent',
   components: {},
+  computed: {
+    ...mapGetters(['isOpenSidebarGetter']),
+  },
+  methods: {
+    clickBurgerMenu() {
+      this.$store.dispatch('isOpenSidebarAction', this.isOpenSidebarGetter);
+    },
+  },
 });
 </script>
 
@@ -28,9 +37,9 @@ export default Vue.extend({
       </ul> -->
 
     <div class="navbar_left">
-      <a href="#" @click.prevent="$emit('click')">
-        <i class="material-icons black-text">dehaze</i>
-      </a>
+      <button @click="clickBurgerMenu" class="btn">
+        <i class="">burger</i>
+      </button>
       <span class="black-text">12.12.12</span>
     </div>
 
@@ -38,19 +47,19 @@ export default Vue.extend({
       <li>
         <a class="dropdown-trigger black-text" href="#" data-target="dropdown">
           USER NAME
-          <i class="material-icons right">arrow_drop_down</i>
+          <i class="">arrow_drop_down</i>
         </a>
 
-        <ul id="dropdown" class="dropdown-content">
+        <ul class="dropdown-content">
           <li>
             <a href="#" class="black-text">
-              <i class="material-icons">account_circle</i>Профиль
+              <i class="">account_circle</i>Профиль
             </a>
           </li>
           <li class="divider" tabindex="-1"></li>
           <li>
             <a href="#" class="black-text">
-              <i class="material-icons">assignment_return</i>Выйти
+              <i class="">assignment_return</i>Выйти
             </a>
           </li>
         </ul>
@@ -78,6 +87,11 @@ export default Vue.extend({
 a {
   text-transform: uppercase;
   padding: 0 10px;
+}
+.btn {
+  background: none;
+  border: 0;
+  padding: 5px;
 }
 .links {
   padding: 0;

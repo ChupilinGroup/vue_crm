@@ -5,6 +5,7 @@ import router from './router';
 import store from './store';
 // import 'materialize-css/dist/css/materialize.min.css';
 
+Vue.config.devtools = true;
 Vue.config.productionTip = false;
 
 new Vue({

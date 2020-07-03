@@ -25,10 +25,9 @@ export default Vue.extend({
       :exact="link.exact"
       tag="li"
       active-class="active"
+      class="btn"
     >
-      <a href="#" class="waves-effect waves-orange pointer">
-        {{ link.title }}
-      </a>
+      {{ link.title }}
     </router-link>
   </ul>
 </template>
@@ -36,5 +35,10 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .sidebar {
   background-color: #445a6d;
+}
+.btn {
+  display: block;
+  text-align: left;
+  padding: 5px;
 }
 </style>

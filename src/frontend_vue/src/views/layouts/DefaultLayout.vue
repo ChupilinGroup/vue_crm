@@ -3,6 +3,7 @@ import Vue from 'vue';
 import HeaderComponent from '../parts/HeaderComponent/HeaderComponent.vue';
 import FooterComponent from '../parts/FooterComponent.vue';
 import SidebarComponent from '../parts/SidebarComponent.vue';
+import { mapGetters } from 'vuex';
 
 export default Vue.extend({
   name: 'DefaultLayout',
@@ -11,19 +12,26 @@ export default Vue.extend({
     FooterComponent,
     SidebarComponent,
   },
+  computed: {
+    ...mapGetters(['isOpenSidebarGetter']),
+  },
+  methods: {},
 });
 </script>
 
 <template>
   <div class="wrapper">
-    <header-component class="header" />
-    <sidebar-component class="sidebar" />
-    <main class="main">
+    <HeaderComponent class="header" />
+    <SidebarComponent
+      class="sidebar"
+      :class="{ sidebar__hidden: !isOpenSidebarGetter }"
+    />
+    <main class="main" :class="{ main__all_columns: !isOpenSidebarGetter }">
       <transition name="fade">
-        <router-view />
+        <router-view class="content" />
       </transition>
     </main>
-    <footer-component class="footer" />
+    <FooterComponent class="footer" />
   </div>
 </template>
 
@@ -50,11 +58,25 @@ export default Vue.extend({
 .sidebar {
   grid-column: 1;
   grid-row: 2;
+  transition: 0.55s opacity, 0.55s visibility;
+  &__hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
+
 .main {
   grid-column: 2;
   grid-row: 2;
+  transition: 2s ease-out;
+  &__all_columns {
+    grid-column: 1 / span 2;
+  }
 }
+.content {
+  padding: 0 5px;
+}
+
 .footer {
   grid-column: 1 / span 2;
   grid-row: 3;

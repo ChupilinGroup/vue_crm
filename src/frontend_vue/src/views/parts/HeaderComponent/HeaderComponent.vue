@@ -7,11 +7,14 @@ export default Vue.extend({
   components: {
     NavbarComponent,
   },
+  data: () => ({
+    isOpenSidebar: true,
+  }),
 });
 </script>
 
 <template>
-  <header class="header-container">
-    <navbar-component />
+  <header class="header">
+    <NavbarComponent />
   </header>
 </template>
