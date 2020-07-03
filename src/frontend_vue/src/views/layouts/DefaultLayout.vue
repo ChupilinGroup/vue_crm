@@ -49,7 +49,7 @@ export default Vue.extend({
   display: grid;
   min-height: 100vh;
   grid-template-columns: 150px auto;
-  grid-template-rows: 100px auto 30px;
+  grid-template-rows: 70px auto 30px;
 }
 .header {
   grid-column: 1 / span 2;

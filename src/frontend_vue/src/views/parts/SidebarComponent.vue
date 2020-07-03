@@ -33,10 +33,13 @@ export default Vue.extend({
 </template>
 
 <style lang="scss" scoped>
+@import '../../assets/scss/_fonts.scss';
+
 .sidebar {
   background-color: #445a6d;
 }
 .btn {
+  font-family: $font__Lora;
   display: block;
   text-align: left;
   padding: 5px;
