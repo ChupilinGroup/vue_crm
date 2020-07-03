@@ -1,43 +1,43 @@
-// @import 'colors';
+@import 'colors';
 
-// a,
-// button,
-// .button,
-// .btn {
-// 	color: inherit;
-// 	cursor: pointer;
-// 	display: inline-block;
-// 	text-align: center;
-// 	text-decoration: none;
-// 	white-space: pre;
-// 	text-decoration: none;
-// 	outline: none;
+a,
+button,
+.button,
+.btn {
+  color: inherit;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  white-space: pre;
+  text-decoration: none;
+  outline: none;
 
-// 	color: $color__white;
+  color: $color__white;
 
-// 	transition: 0.25s;
+  transition: 0.25s;
 
-// 	&:hover {
-// 		color: $color__peru;
-// 		.svg,
-// 		IconComponent {
-// 			fill: $color__peru;
-// 		}
-// 	}
-// }
-// .active {
-// 	color: $color__peru;
-// 	.svg,
-// 	IconComponent {
-// 		fill: $color__peru;
-// 	}
-// }
-// svg,
-// IconComponent,
-// .svg {
-// 	fill: $color__white;
-// 	transition: 0.25s;
-// }
-// input {
-// 	outline: none;
-// }
+  &:hover {
+    color: $color__peru;
+    .svg,
+    IconComponent {
+      fill: $color__peru;
+    }
+  }
+}
+.active {
+  color: $color__peru;
+  .svg,
+  IconComponent {
+    fill: $color__peru;
+  }
+}
+svg,
+IconComponent,
+.svg {
+  fill: $color__white;
+  transition: 0.25s;
+}
+input {
+  outline: none;
+}

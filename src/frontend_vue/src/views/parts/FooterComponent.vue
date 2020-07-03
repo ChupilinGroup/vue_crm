@@ -6,5 +6,14 @@ export default Vue.extend({
 </script>
 
 <template>
-  <h1>Footer</h1>
+  <footer class="footer">
+    <h1>Footer</h1>
+  </footer>
 </template>
+
+<style lang="scss" scoped>
+.footer {
+  color: white;
+  background-color: #1b2024;
+}
+</style>

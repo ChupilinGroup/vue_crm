@@ -27,12 +27,5 @@ export default Vue.extend({
 </template>
 
 <style lang="scss">
-@import '../node_modules/materialize-css/dist/css/materialize.min';
 @import '../src/assets/scss/main.scss';
-
-#app {
-  font-family: 'Avenir', 'Helvetica', 'Arial', 'sans-serif';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 </style>

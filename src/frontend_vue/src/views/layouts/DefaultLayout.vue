@@ -2,41 +2,28 @@
 import Vue from 'vue';
 import HeaderComponent from '../parts/HeaderComponent/HeaderComponent.vue';
 import FooterComponent from '../parts/FooterComponent.vue';
+import SidebarComponent from '../parts/SidebarComponent.vue';
 
 export default Vue.extend({
   name: 'DefaultLayout',
   components: {
     HeaderComponent,
     FooterComponent,
+    SidebarComponent,
   },
 });
-
-// TODO: Добавить управление медиазапросами через JS, состояние переносим в стор
-/* 
-Large desktops and laptops 
-media (min-width: 1200px) {}
-Portrait tablets and medium desktops 
-media (min-width: 992px) and (max-width: 1199px) {}
-Portrait tablets and small desktops 
-media (min-width: 768px) and (max-width: 991px) {}
-Landscape phones and portrait tablets 
-media (max-width: 767px) {}
-Landscape phones and smaller 
-media (max-width: 480px) {}
-*/
 </script>
 
 <template>
   <div class="wrapper">
-    <div class="content">
-      <HeaderComponent />
-      <main>
-        <transition name="fade">
-          <router-view />
-        </transition>
-      </main>
-    </div>
-    <FooterComponent />
+    <header-component class="header" />
+    <sidebar-component class="sidebar" />
+    <main class="main">
+      <transition name="fade">
+        <router-view />
+      </transition>
+    </main>
+    <footer-component class="footer" />
   </div>
 </template>
 
@@ -51,25 +38,36 @@ media (max-width: 480px) {}
 
 // прижимаем footer к низу страницы
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 2px);
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 150px auto;
+  grid-template-rows: 100px auto 30px;
 }
-.content {
-  flex: 1 0 auto;
+.header {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+.sidebar {
+  grid-column: 1;
+  grid-row: 2;
+}
+.main {
+  grid-column: 2;
+  grid-row: 2;
 }
 .footer {
-  flex: 0 0 auto;
+  grid-column: 1 / span 2;
+  grid-row: 3;
 }
 
 // анимация плавного перехода страниц
 .fade-enter-active,
 .fade-leave-active {
   transition-property: opacity;
-  transition-duration: 0.5s;
+  transition-duration: 0.3s;
 }
 .fade-enter-active {
-  transition-delay: 0.5s;
+  transition-delay: 0.3s;
 }
 .fade-enter,
 .fade-leave-active {

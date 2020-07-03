@@ -3,9 +3,11 @@
 @import 'colors';
 @import 'buttons';
 
-// *,
-// html,
-// body,
-// span {
-//   font: 300 14px/1.625 $font__Lora;
-// }
+*,
+html,
+body,
+span {
+  font: 300 14px/1.625 $font__Lora;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

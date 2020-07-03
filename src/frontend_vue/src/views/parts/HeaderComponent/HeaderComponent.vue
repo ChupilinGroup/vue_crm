@@ -12,6 +12,6 @@ export default Vue.extend({
 
 <template>
   <header class="header-container">
-    <NavbarComponent></NavbarComponent>
+    <navbar-component />
   </header>
 </template>
