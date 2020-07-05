@@ -6,12 +6,15 @@ import IconBurgerLineal from '../../../components/icons/IconBurgerLineal.vue';
 
 export default Vue.extend({
   name: 'NavbarComponent',
+
   components: {
     IconBurgerLineal,
   },
+
   computed: {
     ...mapGetters(['isOpenSidebarGetter']),
   },
+
   methods: {
     clickBurgerMenu() {
       this.$store.dispatch('isOpenSidebarAction', this.isOpenSidebarGetter);
@@ -21,59 +24,36 @@ export default Vue.extend({
       this.$router.push('/login?message=logout');
     },
   },
+
+  data: () => ({
+    date: new Date(),
+    dateInterval: 0,
+  }),
+
+  mounted() {
+    this.dateInterval = setInterval((): void => {
+      this.date = new Date();
+    });
+  },
+
+  beforeDestroy() {
+    clearInterval(this.dateInterval);
+  },
 });
 </script>
 
 <template>
   <nav class="nav_wrapper">
-    <!-- <ul class="links">
-        <li>
-          <router-link to="/" exact="" active-class="active" :prefetch="false">
-            главная
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/categories" active-class="active">
-            categories
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/login" active-class="active">
-            login
-          </router-link>
-        </li>
-      </ul> -->
-
     <div class="navbar_left">
       <button @click="clickBurgerMenu" class="btn btn-burger">
-        <!-- <i class="">burger</i> -->
-
         <IconBurgerLineal class="svg svg-icon-burger" />
       </button>
-      <span class="black-text">12.12.12</span>
+      <span class="date">
+        {{ date | dateFilter('date time') }}
+      </span>
     </div>
 
     <ul class="navbar_right">
-      <!-- <li>
-        <a class="dropdown-trigger black-text" href="#" data-target="dropdown">
-          USER NAME
-          <i class="">arrow_drop_down</i>
-        </a>
-
-        <ul class="dropdown-content">
-          <li>
-            <a href="#" class="black-text">
-              <i class="">account_circle</i>Профиль
-            </a>
-          </li>
-          <li class="divider" tabindex="-1"></li>
-          <li>
-            <a href="#" class="black-text">
-              <i class="">assignment_return</i>Выйти
-            </a>
-          </li>
-        </ul> -->
-
       <md-menu md-size="auto" md-align-trigger>
         <md-button md-menu-trigger class="btn">
           USER NAME
@@ -91,7 +71,6 @@ export default Vue.extend({
           </md-menu-item>
         </md-menu-content>
       </md-menu>
-      <!-- </li> -->
     </ul>
   </nav>
 </template>
@@ -123,12 +102,6 @@ a {
   padding: 5px;
 }
 .btn__menu-item {
-  // cursor: pointer;
-  // padding: 0;
-  // margin: 0;
-
-  // text-transform: none;
-  // text-decoration: none;
   color: black;
 }
 

@@ -9,10 +9,14 @@ import 'vue-material/dist/vue-material.min.css';
 
 import 'idempotent-babel-polyfill';
 
+import dateFilter from './filters/dateFilter';
+
 Vue.use(VueMaterial);
 
 Vue.config.devtools = true;
 Vue.config.productionTip = false;
+
+Vue.filter('dateFilter', dateFilter);
 
 new Vue({
   router,
