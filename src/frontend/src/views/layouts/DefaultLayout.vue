@@ -5,12 +5,16 @@ import AppBarComponent from '../parts/AppBarComponent.vue';
 import FooterComponent from '../parts/FooterComponent.vue';
 import NavigationDrawerComponent from '../parts/NavigationDrawerComponent.vue';
 
+import SnackbarComponent from '../../components/SnackbarComponent.vue';
+
 export default Vue.extend({
   name: 'DefaultLayout',
   components: {
     AppBarComponent,
     FooterComponent,
     NavigationDrawerComponent,
+
+    SnackbarComponent,
   },
   computed: {},
   methods: {},
@@ -19,6 +23,8 @@ export default Vue.extend({
 
 <template>
   <v-app>
+    <SnackbarComponent />
+
     <AppBarComponent />
     <NavigationDrawerComponent />
     <v-main class="grey lighten-4">

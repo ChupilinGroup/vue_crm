@@ -11,7 +11,9 @@ export default Vue.extend({
     email: '',
     emailRules: [
       (v: string) => !!v || 'E-mail нужно заполнить',
-      (v: string) => /.+@.+\..+/.test(v) || 'E-mail должен быть правильным',
+      (v: string) =>
+        /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i.test(v) ||
+        'E-mail должен быть правильным',
     ],
 
     password: '',
@@ -24,9 +26,6 @@ export default Vue.extend({
         (v && v.length >= 4) ||
         `Длинна пароля должна быть больше ${4} символов`,
     ],
-
-    checkbox: false,
-    checkboxRules: [(v: string) => !!v || 'Просто согласись с неизбежностью!'],
   }),
 
   methods: {
@@ -44,7 +43,7 @@ export default Vue.extend({
       <v-col cols="12" sm="8" md="4">
         <v-card class="elevation-12">
           <v-toolbar class="title primary white--text" flat>
-            <v-toolbar-title>Login form</v-toolbar-title>
+            <v-toolbar-title>Добро пожаловать</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn class="primary white--text" to="/">X</v-btn>
           </v-toolbar>
@@ -74,13 +73,6 @@ export default Vue.extend({
                 name="password"
                 prepend-icon="mdi-lock"
               ></v-text-field>
-
-              <v-checkbox
-                v-model="checkbox"
-                :rules="checkboxRules"
-                label="Вы согласны с правилами?"
-                required
-              ></v-checkbox>
             </v-form>
           </v-card-text>
 
@@ -92,7 +84,7 @@ export default Vue.extend({
               :disabled="!valid"
               @click="onSubmit"
             >
-              Login
+              Войти
             </v-btn>
           </v-card-actions>
 

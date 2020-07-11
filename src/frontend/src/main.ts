@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import dateFilter from './filters/dateFilter';
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify.plugin';
 import './registerServiceWorker';
 import 'idempotent-babel-polyfill';
 
