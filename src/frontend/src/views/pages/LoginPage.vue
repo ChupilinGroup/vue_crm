@@ -30,7 +30,6 @@ export default Vue.extend({
 
   methods: {
     onSubmit() {
-      console.log('onSubmit ');
       this.$router.push('/');
     },
   },

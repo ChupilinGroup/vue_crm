@@ -11,6 +11,9 @@ export default Vue.extend({
     text: '',
     timeout: 2500,
     color: 'info',
+    messages: {
+      logout: 'Вы успешно вышли из системы',
+    },
   }),
 
   computed: {
@@ -23,16 +26,39 @@ export default Vue.extend({
       () => {
         const msg = this.snackbarStateGetter;
         if (msg !== null) {
-          this.snackbar = true;
-          this.text = this.snackbarStateGetter;
           this.snackbarMutation(null);
         }
       },
     );
   },
 
+  mounted() {
+    this.checkRoute();
+  },
+
+  watch: {
+    $route: function () {
+      this.checkRoute();
+    },
+  },
+
   methods: {
     ...mapMutations(['snackbarMutation']),
+
+    snackTime: function (message: string): void {
+      this.snackbar = true;
+      this.text = message;
+      this.snackbarMutation(message);
+    },
+
+    checkRoute: function (): void {
+      const messages: any = this.messages;
+      const routeQuery: any = this.$route.query;
+      if (messages[routeQuery.message]) {
+        const message = messages[routeQuery.message];
+        this.snackTime(message);
+      }
+    },
   },
 });
 </script>
