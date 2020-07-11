@@ -1,28 +1,36 @@
 <script lang="ts">
 import Vue from 'vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 export default Vue.extend({
   name: 'AppBarComponent',
+
   components: {},
+
   data: () => ({
     date: new Date(),
     dateInterval: 0,
   }),
+
   mounted() {
     this.dateInterval = setInterval((): void => {
       this.date = new Date();
     });
   },
+
   beforeDestroy() {
     clearInterval(this.dateInterval);
   },
+
   computed: {
     ...mapGetters(['navigationDrawerGetter']),
   },
+
   methods: {
     ...mapActions(['navigationDrawerAction']),
-    logout() {
+    async logout() {
+      await this.$store.dispatch('auth/logoutAction');
       this.$router.push('/login?message=logout');
     },
     clickBurgerMenu() {

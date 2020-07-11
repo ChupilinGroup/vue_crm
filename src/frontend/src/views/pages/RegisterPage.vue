@@ -1,6 +1,5 @@
 <script lang="ts">
 import Vue from 'vue';
-import { email, required, minLength } from 'vuelidate/lib/validators';
 
 export default Vue.extend({
   name: 'RegisterPage',

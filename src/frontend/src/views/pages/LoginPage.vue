@@ -1,6 +1,7 @@
 <script lang="ts">
 import Vue from 'vue';
-import { email, required, minLength } from 'vuelidate/lib/validators';
+
+import { mapActions } from 'vuex';
 
 export default Vue.extend({
   name: 'LoginPage',
@@ -29,8 +30,18 @@ export default Vue.extend({
   }),
 
   methods: {
-    onSubmit() {
-      this.$router.push('/');
+    ...mapActions(['loginAction']),
+
+    async onLogin() {
+      const loginFormData = {
+        email: this.email,
+        password: this.password,
+      };
+
+      try {
+        await this.loginAction(loginFormData);
+        this.$router.push('/');
+      } catch (error) {}
     },
   },
 });
@@ -42,7 +53,7 @@ export default Vue.extend({
       <v-col cols="12" sm="8" md="4">
         <v-card class="elevation-12">
           <v-toolbar class="title primary white--text" flat>
-            <v-toolbar-title>Добро пожаловать</v-toolbar-title>
+            <v-toolbar-title>Shadow accounting</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn class="primary white--text" to="/">X</v-btn>
           </v-toolbar>
@@ -81,7 +92,7 @@ export default Vue.extend({
               block
               class="primary white--text"
               :disabled="!valid"
-              @click="onSubmit"
+              @click="onLogin"
             >
               Войти
             </v-btn>
