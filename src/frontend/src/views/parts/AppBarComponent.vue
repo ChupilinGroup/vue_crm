@@ -28,11 +28,13 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapActions(['navigationDrawerAction']),
+    ...mapActions(['navigationDrawerAction', 'logoutAction']),
+
     async logout() {
-      await this.$store.dispatch('auth/logoutAction');
+      await this.logoutAction();
       this.$router.push('/login?message=logout');
     },
+
     clickBurgerMenu() {
       this.navigationDrawerAction(this.navigationDrawerGetter);
     },

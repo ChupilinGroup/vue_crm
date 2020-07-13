@@ -5,6 +5,7 @@ import { mapActions } from 'vuex';
 
 export default Vue.extend({
   name: 'LoginPage',
+
   data: () => ({
     valid: true,
     lazy: false,
@@ -19,13 +20,11 @@ export default Vue.extend({
 
     password: '',
     passwordShow: false,
-    passwordLength: 4,
     passwordRules: [
       (v: string) => !!v || 'Password нужно заполнить',
-      (v: string) =>
-        // TODO: подумать как привязать passwordLength
-        (v && v.length >= 4) ||
-        `Длинна пароля должна быть больше ${4} символов`,
+      (v: string, passwordLength: number = 6) =>
+        (v && v.length >= passwordLength) ||
+        `Длинна пароля должна быть больше ${passwordLength} символов`,
     ],
   }),
 
@@ -41,7 +40,9 @@ export default Vue.extend({
       try {
         await this.loginAction(loginFormData);
         this.$router.push('/');
-      } catch (error) {}
+      } catch (error) {
+        throw error;
+      }
     },
   },
 });

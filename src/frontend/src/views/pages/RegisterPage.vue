@@ -1,6 +1,8 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import { mapActions } from 'vuex';
+
 export default Vue.extend({
   name: 'RegisterPage',
 
@@ -19,20 +21,18 @@ export default Vue.extend({
       (v: string) => !!v || 'Имя пользователя нужно заполнить',
       (v: string) =>
         /^[a-z\s]+$/iu.test(v) || 'Должны быть только английские буквы',
-      (v: string) =>
-        // TODO: подумать как привязать Length
-        (v && v.length >= 5) || `Длинна имени должна быть больше ${5} символов`,
+      (v: string, textLength: number = 4) =>
+        (v && v.length >= textLength) ||
+        `Длинна имени должна быть больше ${textLength} символов`,
     ],
 
     password: '',
     passwordShow: false,
-    passwordLength: 4,
     passwordRules: [
       (v: string) => !!v || 'Password нужно заполнить',
-      (v: string) =>
-        // TODO: подумать как привязать passwordLength
-        (v && v.length >= 4) ||
-        `Длинна пароля должна быть больше ${4} символов`,
+      (v: string, passwordLength: number = 6) =>
+        (v && v.length >= passwordLength) ||
+        `Длинна пароля должна быть больше ${passwordLength} символов`,
     ],
 
     checkbox: false,
@@ -40,8 +40,22 @@ export default Vue.extend({
   }),
 
   methods: {
-    onSubmit() {
-      this.$router.push('/');
+    ...mapActions(['registerAction']),
+
+    async onRegister() {
+      try {
+        const registerFormData = {
+          email: this.email,
+          password: this.password,
+          name: this.userName,
+        };
+
+        console.log('registerFormData :>> ', registerFormData);
+        await this.registerAction(registerFormData);
+        this.$router.push('/');
+      } catch (error) {
+        throw error;
+      }
     },
   },
 });
@@ -109,7 +123,7 @@ export default Vue.extend({
               block
               class="primary white--text"
               :disabled="!valid"
-              @click="onSubmit"
+              @click="onRegister"
             >
               Регистрация
             </v-btn>
