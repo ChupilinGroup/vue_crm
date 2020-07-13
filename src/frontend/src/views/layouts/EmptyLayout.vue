@@ -1,18 +1,23 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import SnackbarComponent from '../../components/SnackbarComponent.vue';
+
 export default Vue.extend({
   name: 'EmptyLayout',
-  components: {},
+
+  components: {
+    SnackbarComponent,
+  },
+
   data: () => ({}),
 });
 </script>
 
 <template>
-  <!-- <div class="wrapper grey lighten-4">
-    <router-view />
-  </div> -->
   <v-app>
+    <SnackbarComponent />
+
     <v-main class="wrapper grey lighten-4">
       <router-view />
     </v-main>
