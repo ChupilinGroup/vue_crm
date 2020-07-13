@@ -18,6 +18,7 @@ const auth = {
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
       } catch (error) {
+        commit('setErrorNotificationMutation', error);
         throw error;
       }
     },
@@ -27,7 +28,7 @@ const auth = {
     },
 
     async registerAction(
-      { dispatch }: ActionContext,
+      { dispatch, commit }: ActionContext,
       { email, password, name }: RegistrationData,
     ) {
       console.log('email, password, name :>> ', email, password, name);
@@ -40,6 +41,7 @@ const auth = {
           name,
         });
       } catch (error) {
+        commit('setErrorNotificationMutation', error);
         throw error;
       }
     },

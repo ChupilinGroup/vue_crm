@@ -2,18 +2,17 @@
 import Vue from 'vue';
 
 import { mapGetters, mapMutations } from 'vuex';
+import commonMessages from '../utils/commonMessages';
 
 export default Vue.extend({
   name: 'SnackbarComponent',
 
   data: () => ({
     snackbar: false,
-    text: '',
-    timeout: 2500,
-    color: 'info',
-    messages: {
-      logout: 'Вы успешно вышли из системы',
-    },
+    message: '',
+    timeout: -1,
+    color: '',
+    messages: commonMessages,
   }),
 
   computed: {
@@ -45,9 +44,15 @@ export default Vue.extend({
   methods: {
     ...mapMutations(['snackbarMutation']),
 
-    snackTime: function (message: string): void {
+    snackTime: function (
+      message: string = 'Что-то пошло не так.',
+      color: string = 'info',
+      timeout: number = 2500,
+    ): void {
       this.snackbar = true;
-      this.text = message;
+      this.message = message;
+      this.color = color;
+      this.timeout = timeout;
       this.snackbarMutation(message);
     },
 
@@ -66,7 +71,7 @@ export default Vue.extend({
 <template>
   <v-snackbar v-model="snackbar" :timeout="timeout" :color="color">
     <div class="wrapper">
-      {{ text }}
+      {{ message }}
       <v-btn text @click="snackbar = false">
         Закрыть
       </v-btn>

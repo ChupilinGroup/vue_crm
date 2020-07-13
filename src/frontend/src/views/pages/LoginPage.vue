@@ -1,7 +1,9 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+
+import commonMessages from '../../utils/commonMessages';
 
 export default Vue.extend({
   name: 'LoginPage',
@@ -26,10 +28,34 @@ export default Vue.extend({
         (v && v.length >= passwordLength) ||
         `Длинна пароля должна быть больше ${passwordLength} символов`,
     ],
+
+    message: '',
+    messages: commonMessages,
   }),
+
+  computed: {
+    ...mapGetters(['errorNotificationGetter']),
+  },
+
+  watch: {
+    errorNotificationGetter(fbError) {
+      if (fbError) {
+        const messages: any = this.messages;
+        const code: string = fbError.code;
+        const message = messages[code];
+        this.message = message;
+      } else {
+        this.message = '';
+        this.clearErrorNotificationMutation;
+      }
+    },
+  },
 
   methods: {
     ...mapActions(['loginAction']),
+
+    // TODO clearErrorNotificationMutation не работает как ожидалось
+    ...mapMutations(['clearErrorNotificationMutation']),
 
     async onLogin() {
       const loginFormData = {
@@ -39,6 +65,7 @@ export default Vue.extend({
 
       try {
         await this.loginAction(loginFormData);
+        this.clearErrorNotificationMutation;
         this.$router.push('/');
       } catch (error) {
         throw error;
@@ -99,6 +126,12 @@ export default Vue.extend({
             </v-btn>
           </v-card-actions>
 
+          <v-layout justify-center v-if="message">
+            <v-card-actions class="message">
+              {{ message }}
+            </v-card-actions>
+          </v-layout>
+
           <v-card-actions>
             <p class="card_register">
               Нет аккаунта?
@@ -125,5 +158,8 @@ export default Vue.extend({
 }
 .v-card__actions {
   padding: 8px 16px;
+}
+.message {
+  color: red;
 }
 </style>

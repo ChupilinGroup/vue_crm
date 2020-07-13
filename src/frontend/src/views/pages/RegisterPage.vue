@@ -1,7 +1,9 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+
+import commonMessages from '../../utils/commonMessages';
 
 export default Vue.extend({
   name: 'RegisterPage',
@@ -37,10 +39,39 @@ export default Vue.extend({
 
     checkbox: false,
     checkboxRules: [(v: string) => !!v || 'Просто согласись с неизбежностью!'],
+
+    message: '',
+    messages: commonMessages,
   }),
+
+  computed: {
+    ...mapGetters(['errorNotificationGetter']),
+  },
+
+  watch: {
+    errorNotificationGetter(fbError) {
+      /*
+      test@mail.ru
+      123456
+      testUser
+      */
+      if (fbError) {
+        const messages: any = this.messages;
+        const code: string = fbError.code;
+        const message = messages[code];
+        this.message = message;
+      } else {
+        this.message = '';
+        this.clearErrorNotificationMutation;
+      }
+    },
+  },
 
   methods: {
     ...mapActions(['registerAction']),
+
+    // TODO clearErrorNotificationMutation не работает как ожидалось
+    ...mapMutations(['clearErrorNotificationMutation']),
 
     async onRegister() {
       try {
@@ -52,6 +83,7 @@ export default Vue.extend({
 
         console.log('registerFormData :>> ', registerFormData);
         await this.registerAction(registerFormData);
+        this.clearErrorNotificationMutation;
         this.$router.push('/');
       } catch (error) {
         throw error;
@@ -129,6 +161,12 @@ export default Vue.extend({
             </v-btn>
           </v-card-actions>
 
+          <v-layout justify-center v-if="message">
+            <v-card-actions class="message">
+              {{ message }}
+            </v-card-actions>
+          </v-layout>
+
           <v-card-actions>
             <p class="card_register">
               Есть аккаунт?
@@ -155,5 +193,8 @@ export default Vue.extend({
 }
 .v-card__actions {
   padding: 8px 16px;
+}
+.message {
+  color: red;
 }
 </style>
