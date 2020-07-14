@@ -7,13 +7,7 @@ import firebase from 'firebase/app';
 import { ActionContext } from '@/interfaces/ActionContext.interface';
 import { RegistrationData } from '@/interfaces/RegistrationData.interface';
 
-const auth = {
-  state: {
-    user: {
-      uid: {},
-    },
-  },
-
+const info = {
   actions: {
     async loginAction(
       { dispatch, commit }: ActionContext,
@@ -53,7 +47,7 @@ const auth = {
 
     getUidAction({ commit }: any): string | null {
       const user: any = firebase.auth().currentUser || null;
-      console.log('user', user); // TODO - del
+      console.log('user', user);
       const userUid = user.uid || null;
       commit('setUidMutation', userUid);
       return userUid;
@@ -71,4 +65,4 @@ const auth = {
   },
 };
 
-export default auth;
+export default info;
