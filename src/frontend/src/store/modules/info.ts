@@ -5,63 +5,38 @@ https://vuecrm200711.firebaseio.com/
 import firebase from 'firebase/app';
 
 import { ActionContext } from '@/interfaces/ActionContext.interface';
-import { RegistrationData } from '@/interfaces/RegistrationData.interface';
 
 const info = {
+  state: {
+    info: {},
+  },
+
   actions: {
-    async loginAction(
-      { dispatch, commit }: ActionContext,
-      { email, password }: RegistrationData,
-    ) {
+    async fetchInfoAction({ dispatch, commit, getters }: ActionContext) {
       try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);
-        await dispatch('getUidAction');
+        const uid = await getters.uidGetter;
+        const info = (
+          await firebase.database().ref(`/users/${uid}/info`).once('value')
+        ).val();
+        commit('setInfoMutation', info);
       } catch (error) {
-        commit('setErrorNotificationMutation', error);
         throw error;
       }
-    },
-
-    async logoutAction() {
-      await firebase.auth().signOut();
-    },
-
-    async registerAction(
-      { dispatch, commit }: ActionContext,
-      { email, password, name }: RegistrationData,
-    ) {
-      console.log('email, password, name :>> ', email, password, name);
-      try {
-        await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const uid = await dispatch('getUidAction');
-
-        await firebase.database().ref(`/users/${uid}/info`).set({
-          bill: 10000,
-          name,
-        });
-      } catch (error) {
-        commit('setErrorNotificationMutation', error);
-        throw error;
-      }
-    },
-
-    getUidAction({ commit }: any): string | null {
-      const user: any = firebase.auth().currentUser || null;
-      console.log('user', user);
-      const userUid = user.uid || null;
-      commit('setUidMutation', userUid);
-      return userUid;
     },
   },
 
   mutations: {
-    setUidMutation(state: any, uid: any) {
-      state.user.uid = uid;
+    setInfoMutation(state: any, info: any) {
+      state.info = info;
+    },
+    clearInfoMutation(state: any) {
+      state.info = {};
     },
   },
 
   getters: {
-    userGetter: (state: any) => state.user,
+    infoGetter: (state: any) => state.info,
+    infoUserNameGetter: (state: any) => state.info.name || null,
   },
 };
 

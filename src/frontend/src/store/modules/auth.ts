@@ -10,7 +10,7 @@ import { RegistrationData } from '@/interfaces/RegistrationData.interface';
 const auth = {
   state: {
     user: {
-      uid: {},
+      uid: null,
     },
   },
 
@@ -28,15 +28,15 @@ const auth = {
       }
     },
 
-    async logoutAction() {
+    async logoutAction({ dispatch, commit }: ActionContext) {
       await firebase.auth().signOut();
+      commit('clearInfoMutation');
     },
 
     async registerAction(
       { dispatch, commit }: ActionContext,
       { email, password, name }: RegistrationData,
     ) {
-      console.log('email, password, name :>> ', email, password, name);
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password);
         const uid = await dispatch('getUidAction');
@@ -53,8 +53,8 @@ const auth = {
 
     getUidAction({ commit }: any): string | null {
       const user: any = firebase.auth().currentUser || null;
-      console.log('user', user); // TODO - del
       const userUid = user.uid || null;
+
       commit('setUidMutation', userUid);
       return userUid;
     },
@@ -67,7 +67,7 @@ const auth = {
   },
 
   getters: {
-    userGetter: (state: any) => state.user,
+    uidGetter: (state: any) => state.user.uid,
   },
 };
 

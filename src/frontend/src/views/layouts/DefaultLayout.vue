@@ -1,6 +1,8 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import { mapGetters, mapActions } from 'vuex';
+
 import AppBarComponent from '../parts/AppBarComponent.vue';
 import FooterComponent from '../parts/FooterComponent.vue';
 import NavigationDrawerComponent from '../parts/NavigationDrawerComponent.vue';
@@ -9,6 +11,7 @@ import SnackbarComponent from '../../components/SnackbarComponent.vue';
 
 export default Vue.extend({
   name: 'DefaultLayout',
+
   components: {
     AppBarComponent,
     FooterComponent,
@@ -16,8 +19,21 @@ export default Vue.extend({
 
     SnackbarComponent,
   },
-  computed: {},
-  methods: {},
+
+  computed: {
+    ...mapGetters(['infoGetter']),
+  },
+
+  async mounted() {
+    const existInfo = Object.keys(this.infoGetter).length;
+    if (!existInfo) {
+      await this.fetchInfoAction();
+    }
+  },
+
+  methods: {
+    ...mapActions(['fetchInfoAction']),
+  },
 });
 </script>
 
