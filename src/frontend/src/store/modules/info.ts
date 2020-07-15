@@ -37,6 +37,7 @@ const info = {
   getters: {
     infoGetter: (state: any) => state.info,
     infoUserNameGetter: (state: any) => state.info.name || null,
+    infoBillGetter: (state: any) => state.info.bill || null,
   },
 };
 

@@ -1,60 +1,60 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import { mapActions, mapMutations, mapGetters } from 'vuex';
+
+import HomeBillComponent from '../components/home/HomeBillComponent.vue';
+import HomeCurrencyComponent from '../components/home/HomeCurrencyComponent.vue';
+import LoaderComponent from '../../components/LoaderComponent.vue';
+
 export default Vue.extend({
   name: 'HomePage',
+
+  components: {
+    HomeBillComponent,
+    HomeCurrencyComponent,
+    LoaderComponent,
+  },
+
+  data: () => ({
+    loading: true,
+    currency: null,
+  }),
+
+  async mounted() {
+    this.currency = await this.commonFetchCurrency();
+    this.loading = false;
+  },
+
+  methods: {
+    ...mapActions(['commonFetchCurrency']),
+
+    async refresh() {
+      this.loading = true;
+      this.currency = await this.$store.dispatch('commonFetchCurrency');
+      console.log('this.currency :>> ', this.currency);
+      this.loading = false;
+    },
+  },
 });
 </script>
 
 <template>
   <div>
-    <div class="page-title">
-      <h3>Счет</h3>
+    <v-card-actions>
+      <h2>Счет</h2>
+      <v-spacer></v-spacer>
+      <v-btn color="secondary" @click="refresh">
+        обновить
+      </v-btn>
+    </v-card-actions>
 
-      <button class="btn waves-effect waves-light btn-small">
-        <i class="material-icons">refresh</i>
-      </button>
-    </div>
+    <LoaderComponent v-if="loading" />
 
-    <div class="row">
-      <div class="col s12 m6 l4">
-        <div class="card light-blue bill-card">
-          <div class="card-content white-text">
-            <span class="card-title">Счет в валюте</span>
+    <div v-else class="row">
+      <HomeBillComponent :rates="currency.rates" />
 
-            <p class="currency-line">
-              <span>12.0 Р</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m6 l8">
-        <div class="card orange darken-3 bill-card">
-          <div class="card-content white-text">
-            <div class="card-header">
-              <span class="card-title">Курс валют</span>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Валюта</th>
-                  <th>Курс</th>
-                  <th>Дата</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>руб</td>
-                  <td>12121</td>
-                  <td>12.12.12</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <HomeCurrencyComponent :rates="currency.rates" :date="currency.date" />
     </div>
   </div>
 </template>

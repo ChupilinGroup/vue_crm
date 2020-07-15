@@ -9,10 +9,14 @@ import NavigationDrawerComponent from '../parts/NavigationDrawerComponent.vue';
 
 import SnackbarComponent from '../../components/SnackbarComponent.vue';
 
+import LoaderComponent from '../../components/LoaderComponent.vue';
+
 export default Vue.extend({
   name: 'DefaultLayout',
 
   components: {
+    LoaderComponent,
+
     AppBarComponent,
     FooterComponent,
     NavigationDrawerComponent,
@@ -20,11 +24,17 @@ export default Vue.extend({
     SnackbarComponent,
   },
 
+  data: () => ({
+    loading: true,
+  }),
+
   computed: {
     ...mapGetters(['infoGetter']),
   },
 
   async mounted() {
+    this.loading = false;
+
     const existInfo = Object.keys(this.infoGetter).length;
     if (!existInfo) {
       await this.fetchInfoAction();
@@ -38,13 +48,16 @@ export default Vue.extend({
 </script>
 
 <template>
-  <v-app>
+  <LoaderComponent v-if="loading" />
+  <v-app v-else-if="!loading">
     <SnackbarComponent />
 
     <AppBarComponent />
     <NavigationDrawerComponent />
-    <v-main class="grey lighten-4">
-      <router-view></router-view>
+    <v-main class="v-main grey lighten-4">
+      <v-card-text>
+        <router-view></router-view>
+      </v-card-text>
     </v-main>
     <footer-component />
   </v-app>

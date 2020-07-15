@@ -61,7 +61,7 @@ export default Vue.extend({
           v-bind="attrs"
           v-on="on"
         >
-          {{ infoUserNameGetter }}
+          {{ infoUserNameGetter || 'anonym' }}
         </v-btn>
       </template>
       <v-list class="user-menu-list">
