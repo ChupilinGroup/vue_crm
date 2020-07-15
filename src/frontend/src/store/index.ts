@@ -6,7 +6,7 @@ import snackbar from './modules/snackbar';
 import auth from './modules/auth';
 import errorNotification from './modules/errorNotification';
 import info from './modules/info';
-import common from './modules/common';
+import currency from './modules/currency';
 
 Vue.use(Vuex);
 
@@ -17,6 +17,6 @@ export default new Vuex.Store({
     auth,
     errorNotification,
     info,
-    common,
+    currency,
   },
 });

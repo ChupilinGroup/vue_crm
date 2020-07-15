@@ -6,21 +6,16 @@ import { mapGetters } from 'vuex';
 export default Vue.extend({
   name: 'HomeBillComponent',
 
-  props: ['rates'],
-
-  data: () => ({}),
+  props: ['currency'],
 
   computed: {
-    ...mapGetters(['infoBillGetter', 'commonCurrenciesGetter']),
-
-    base(): number {
-      return this.infoBillGetter / (this.rates['RUB'] / this.rates['EUR']);
-    },
+    ...mapGetters(['infoBillGetter', 'currenciesKeysGetter']),
   },
 
   methods: {
-    getCurrency(currency: number) {
-      return Math.floor(this.base * this.rates[currency]);
+    getCurrency(symbol: string) {
+      const count = this.infoBillGetter / this.currency[symbol].rate;
+      return count;
     },
   },
 });
@@ -39,9 +34,9 @@ export default Vue.extend({
         </thead>
 
         <tbody>
-          <tr v-for="cur of commonCurrenciesGetter" :key="cur">
-            <td>{{ cur }}</td>
-            <td>{{ getCurrency(cur) | currencyFilter(cur) }}</td>
+          <tr v-for="symbol of currenciesKeysGetter" :key="symbol">
+            <td>{{ symbol }}</td>
+            <td>{{ getCurrency(symbol) | currencyFilter(symbol) }}</td>
           </tr>
         </tbody>
       </v-simple-table>

@@ -21,18 +21,22 @@ export default Vue.extend({
     currency: null,
   }),
 
+  computed: {
+    ...mapGetters(['currenciesGetter', 'currencyBaseGetter']),
+  },
+
   async mounted() {
-    this.currency = await this.commonFetchCurrency();
+    await this.currencyFetchAction();
+    this.currency = await this.currenciesGetter;
     this.loading = false;
   },
 
   methods: {
-    ...mapActions(['commonFetchCurrency']),
+    ...mapActions(['currencyFetchAction']),
 
     async refresh() {
       this.loading = true;
-      this.currency = await this.$store.dispatch('commonFetchCurrency');
-      console.log('this.currency :>> ', this.currency);
+      await this.currencyFetchAction();
       this.loading = false;
     },
   },
@@ -42,7 +46,7 @@ export default Vue.extend({
 <template>
   <div>
     <v-card-actions>
-      <h2>Счет</h2>
+      <h2>Счет ({{ currencyBaseGetter }})</h2>
       <v-spacer></v-spacer>
       <v-btn color="secondary" @click="refresh">
         обновить
@@ -51,10 +55,9 @@ export default Vue.extend({
 
     <LoaderComponent v-if="loading" />
 
-    <div v-else class="row">
-      <HomeBillComponent :rates="currency.rates" />
-
-      <HomeCurrencyComponent :rates="currency.rates" :date="currency.date" />
+    <div v-else-if="!loading" class="row">
+      <HomeBillComponent :currency="currency" />
+      <HomeCurrencyComponent :currency="currency" />
     </div>
   </div>
 </template>

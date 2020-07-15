@@ -6,12 +6,10 @@ import { mapGetters } from 'vuex';
 export default Vue.extend({
   name: 'HomeCurrencyComponent',
 
-  props: ['rates', 'date'],
-
-  data: () => ({}),
+  props: ['currency'],
 
   computed: {
-    ...mapGetters(['commonCurrenciesGetter']),
+    ...mapGetters(['currenciesKeysGetter']),
   },
 });
 </script>
@@ -31,10 +29,10 @@ export default Vue.extend({
         </thead>
 
         <tbody>
-          <tr v-for="cur in commonCurrenciesGetter" :key="cur">
-            <td>{{ cur }}</td>
-            <td>{{ rates[cur].toFixed(5) }}</td>
-            <td>{{ date | date('date') }}</td>
+          <tr v-for="symbol in currenciesKeysGetter" :key="symbol">
+            <td>{{ symbol }}</td>
+            <td>{{ currency[symbol].rate }}</td>
+            <td>{{ currency[symbol].date | dateFilter('DD-MM-YYYY') }}</td>
           </tr>
         </tbody>
       </v-simple-table>
