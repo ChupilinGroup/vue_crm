@@ -4,8 +4,6 @@ import Vue from 'vue';
 import SnackbarComponent from '../../components/SnackbarComponent.vue';
 import LoaderComponent from '../../components/LoaderComponent.vue';
 
-import LoaderComponent from '../../components/LoaderComponent.vue';
-
 export default Vue.extend({
   name: 'EmptyLayout',
 
