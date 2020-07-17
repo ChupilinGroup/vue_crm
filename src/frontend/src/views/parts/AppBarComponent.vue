@@ -24,7 +24,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters(['navigationDrawerGetter']),
+    ...mapGetters(['navigationDrawerGetter', 'infoUserNameGetter']),
   },
 
   methods: {
@@ -61,7 +61,7 @@ export default Vue.extend({
           v-bind="attrs"
           v-on="on"
         >
-          USER NAME
+          {{ infoUserNameGetter || 'anonym' }}
         </v-btn>
       </template>
       <v-list class="user-menu-list">

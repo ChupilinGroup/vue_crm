@@ -5,6 +5,8 @@ import navigationDrawer from './modules/navigationDrawer';
 import snackbar from './modules/snackbar';
 import auth from './modules/auth';
 import errorNotification from './modules/errorNotification';
+import info from './modules/info';
+import currency from './modules/currency';
 
 Vue.use(Vuex);
 
@@ -14,5 +16,7 @@ export default new Vuex.Store({
     snackbar,
     auth,
     errorNotification,
+    info,
+    currency,
   },
 });

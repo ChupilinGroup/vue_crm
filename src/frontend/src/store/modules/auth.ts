@@ -8,7 +8,11 @@ import { ActionContext } from '@/interfaces/ActionContext.interface';
 import { RegistrationData } from '@/interfaces/RegistrationData.interface';
 
 const auth = {
-  state: {},
+  state: {
+    user: {
+      uid: null,
+    },
+  },
 
   actions: {
     async loginAction(
@@ -17,21 +21,22 @@ const auth = {
     ) {
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
+        await dispatch('getUidAction');
       } catch (error) {
         commit('setErrorNotificationMutation', error);
         throw error;
       }
     },
 
-    async logoutAction() {
+    async logoutAction({ dispatch, commit }: ActionContext) {
       await firebase.auth().signOut();
+      commit('clearInfoMutation');
     },
 
     async registerAction(
       { dispatch, commit }: ActionContext,
       { email, password, name }: RegistrationData,
     ) {
-      console.log('email, password, name :>> ', email, password, name);
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password);
         const uid = await dispatch('getUidAction');
@@ -46,14 +51,24 @@ const auth = {
       }
     },
 
-    getUidAction(): string | null {
-      const user = firebase.auth().currentUser;
-      return user ? user.uid : null;
+    getUidAction({ commit }: any): string | null {
+      const user: any = firebase.auth().currentUser || null;
+      const userUid = user.uid || null;
+
+      commit('setUidMutation', userUid);
+      return userUid;
     },
   },
 
-  mutations: {},
-  getters: {},
+  mutations: {
+    setUidMutation(state: any, uid: any) {
+      state.user.uid = uid;
+    },
+  },
+
+  getters: {
+    uidGetter: (state: any) => state.user.uid,
+  },
 };
 
 export default auth;

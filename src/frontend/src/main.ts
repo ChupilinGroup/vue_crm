@@ -2,8 +2,11 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import dateFilter from './filters/dateFilter';
 import vuetify from './plugins/vuetify.plugin';
+
+import dateFilter from './filters/dateFilter';
+import currencyFilter from './filters/currencyFilter';
+
 import './registerServiceWorker';
 import 'idempotent-babel-polyfill';
 
@@ -15,7 +18,9 @@ import 'firebase/database';
 Vue.config.devtools = true;
 Vue.config.productionTip = false;
 
+// filters
 Vue.filter('dateFilter', dateFilter);
+Vue.filter('currencyFilter', currencyFilter);
 
 let app: any;
 
